@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PiCamera Doorbell{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn {
+            margin-left: 15px;
+        }
+
+        container {
+        width: 80%; /* Set to 80% of the window */
+        max-width: 1200px; /* Limit max width for larger screens */
+        margin: 40px auto; /* Center the container */
+        }
+
+        .content-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background: #34403b;
+            color: #fff;
+            padding: 15px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'website_picam:index' %}">PiCamera Doorbell</a>
+            
+            <!-- Navbar Links -->
+                <div class="ms-auto">
+                    {% if user.is_authenticated %}
+                        <span class="navbar-text me-3 text-white">
+                            Hello, {{ user.username }}
+                        </span>
+
+                        <!-- Settings Button -->
+                        <a href="http://192.168.0.72/" class="btn btn-warning me-2" target="_blank">
+                            Settings
+                        </a>
+
+                        <!-- Logout Form (POST request) -->
+                        <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light">
+                                Log out
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'users:login' %}" class="btn btn-primary">
+                            Log in
+                        </a>
+                    {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-card">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 PiCamera Doorbell. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

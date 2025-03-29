@@ -1,0 +1,22 @@
+<!-- users/templates/registration/profile.html -->
+{% extends "website_picam/base.html" %}
+
+{% block title %}Profile - PiCamera Doorbell{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">Live Stream</h2>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe 
+                src="http://92.238.233.217" 
+                class="embed-responsive-item" 
+                width="100%" 
+                height="500" 
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+            > Your Picamera</iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}
