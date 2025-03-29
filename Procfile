@@ -1,2 +1,3 @@
-web: gunicorn project.project_PiCamera
+web: gunicorn project_PiCamera.wsgi --bind 0.0.0.0:$PORT
+
 
