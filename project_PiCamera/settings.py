@@ -2,6 +2,7 @@ from pathlib import Path
 # Import dj-database-url at the beginning of the file.
 import dj_database_url
 import os
+from dotenv import load_dotenv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -116,20 +117,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 # This setting informs Django of the URI path from which your static files will be served to users
-# Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/..
-STATIC_URL = 'static/'
+STATIC_URL = "/static/" #Tells Django to look for static files in static folder vs STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")] #Only needed if there's custom CSS files
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # This production code might break development mode
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   
-
-# Allow all hosts temporarily (not recommended for production)
-ALLOWED_HOSTS = ["*"]
 
 # Trust all origins temporarily (for debugging only)
 CSRF_TRUSTED_ORIGINS = []
@@ -137,6 +132,14 @@ CSRF_TRUSTED_ORIGINS = []
 # Secure cookies for production
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+# Load variables from .env
+load_dotenv()
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
+SECRET_KEY = os.getenv("SECRET_KEY")
+DATABASE_URL = os.getenv("DATABASE_URL")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
